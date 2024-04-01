@@ -8,7 +8,6 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
@@ -17,7 +16,7 @@ class TaskControllerTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Test the index method of the HolidayPlanController.
+     * Test the index method of the TaskController.
      *
      * @return void
      */
@@ -38,7 +37,7 @@ class TaskControllerTest extends TestCase
     }
 
     /**
-     * Test the store method of the HolidayPlanController.
+     * Test the store method of the TaskController.
      *
      * @return void
      */
@@ -47,7 +46,7 @@ class TaskControllerTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/v1/tasks', [
-            'title' => 'New Holiday Plan',
+            'title' => 'TAsk',
             'date' => '2025-01-01',
             'location' => 'place',
             'details' => 'details'
@@ -61,7 +60,7 @@ class TaskControllerTest extends TestCase
     }
 
     /**
-     * Test the show method of the HolidayPlanController.
+     * Test the show method of the TaskController.
      *
      * @return void
      */
@@ -80,7 +79,7 @@ class TaskControllerTest extends TestCase
     }
 
     /**
-     * Test the update method of the HolidayPlanController.
+     * Test the update method of the TaskController.
      *
      * @return void
      */
@@ -106,7 +105,7 @@ class TaskControllerTest extends TestCase
     }
 
     /**
-     * Test the destroy method of the HolidayPlanController.
+     * Test the destroy method of the TaskController.
      *
      * @return void
      */
