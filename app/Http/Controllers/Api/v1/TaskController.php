@@ -33,8 +33,8 @@ class TaskController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->input('per_page', 10);
-        $currentPage = $request->input('current_page', 1);
+        $perPage = $request->integer('per_page', 10);
+        $currentPage = $request->integer('current_page', 1);
         $userID = $request->user()->id;
 
 

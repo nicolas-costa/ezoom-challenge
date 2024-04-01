@@ -13,6 +13,7 @@ abstract class AbstractTaskRequest extends FormRequest
     {
         $parameters = $this->input();
 
+        /** @var TaskDTO $task */
         $task = $this->route('task');
 
         return new TaskDTO(
@@ -22,7 +23,7 @@ abstract class AbstractTaskRequest extends FormRequest
             $parameters['date'],
             $parameters['location'],
             $parameters['details'] ?? null,
-            null
+            $task->getUserId() ?? null
         );
     }
 }
