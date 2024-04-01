@@ -23,7 +23,7 @@ abstract class AbstractTaskRequest extends FormRequest
             $parameters['date'],
             $parameters['location'],
             $parameters['details'] ?? null,
-            $task->getUserId() ?? null
+            $task?->getUserId() ?? null
         );
     }
 }
