@@ -7,21 +7,40 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\Http\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\JWTGuard;
 
 class AuthController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    /**
+     * @param JWTGuard $authGuard
+     */
+    public function __construct(private Guard $authGuard)
+    {
+    }
+
+    public function login(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
 
-        if (! $token = Auth::attempt($credentials)) {
+        if (! $token = $this->authGuard->attempt($credentials)) {
             throw new InvalidCredentialsException();
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function refresh(Request $request)
+    {
+        try {
+            $newToken = $this->authGuard->refresh();
+
+            return $this->respondWithToken($newToken);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => 'Failed to refresh token'], 401);
+        }
     }
 
     protected function respondWithToken($token): JsonResponse

@@ -21,7 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('auth/login', AuthController::class . '@__invoke');
+Route::group([
+    'prefix' => 'auth',
+    'middleware' => 'api',
+    'controller' => TaskController::class,
+], function (Router $router) {
+    $router->post('login', AuthController::class . '@login');
+
+    $router->post('refresh-token', AuthController::class . '@refresh');
+});
 
 Route::group([
     'prefix' => 'v1'
